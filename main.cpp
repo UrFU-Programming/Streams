@@ -75,6 +75,60 @@ Array<int> splitter(long long number)
     return array;
 }
 
+class String
+{
+public:
+    String(const char *initStr = 0) :
+        m_size(0)
+    {
+        if (initStr) {
+            m_size = own_strlen(initStr);
+            own_memcpy(m_buffer, initStr, m_size);
+        }
+    }
+
+    int size() const { return m_size; }
+    bool isEmpty() const { return m_size == 0; }
+
+    char at(int index) const
+    {
+        return m_buffer[index];
+    }
+
+    char &operator[](int index)
+    {
+        return m_buffer[index];
+    }
+
+    String &operator+=(const char c)
+    {
+        m_buffer[m_size] = c;
+        ++m_size;
+        return *this;
+    }
+
+    String &operator+=(const int n)
+    {
+        Array<int> digits = splitter(n);
+        for (int i = 0; i < digits.count(); ++i) {
+            m_buffer[m_size] = digits.at(i) + '0';
+            ++m_size;
+        }
+        return *this;
+    }
+
+    String &operator+=(const String &anotherStr)
+    {
+        own_memcpy(&m_buffer[m_size], anotherStr.m_buffer, anotherStr.m_size);
+        m_size += anotherStr.m_size;
+        return *this;
+    }
+
+private:
+    int m_size;
+    char m_buffer[256];
+};
+
 class TextWriter
 {
 public:
