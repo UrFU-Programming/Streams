@@ -19,7 +19,7 @@ void own_memcpy(void *dest, const void *src, int count)
     char *d = static_cast<char*>(dest);
     const char *s = static_cast<const char*>(src);
 
-    for (int i = 0; i < count; i) {
+    for (int i = 0; i < count; ++i) {
         d[i] = s[i];
     }
 }
