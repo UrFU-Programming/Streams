@@ -85,10 +85,13 @@ public:
             m_size = own_strlen(initStr);
             own_memcpy(m_buffer, initStr, m_size);
         }
+        m_buffer[m_size] = 0;
     }
 
     int size() const { return m_size; }
     bool isEmpty() const { return m_size == 0; }
+
+    const char *constData() const { return m_buffer; }
 
     char at(int index) const
     {
@@ -104,6 +107,7 @@ public:
     {
         m_buffer[m_size] = c;
         ++m_size;
+        m_buffer[m_size] = 0;
         return *this;
     }
 
@@ -114,6 +118,7 @@ public:
             m_buffer[m_size] = digits.at(i) + '0';
             ++m_size;
         }
+        m_buffer[m_size] = 0;
         return *this;
     }
 
@@ -121,6 +126,7 @@ public:
     {
         own_memcpy(&m_buffer[m_size], anotherStr.m_buffer, anotherStr.m_size);
         m_size += anotherStr.m_size;
+        m_buffer[m_size] = 0;
         return *this;
     }
 
