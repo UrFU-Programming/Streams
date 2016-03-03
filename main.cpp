@@ -85,13 +85,13 @@ public:
 
     TextWriter &operator<<(char c)
     {
-        write(m_handle, &c, 1);
+        writeData(&c, 1);
         return *this;
     }
 
     TextWriter &operator<<(const char *str)
     {
-        write(m_handle, str, own_strlen(str));
+        writeData(str, own_strlen(str));
         return *this;
     }
 
@@ -103,6 +103,11 @@ public:
             *this << c;
         }
         return *this;
+    }
+protected:
+    int writeData(const void *data, int size)
+    {
+        return write(m_handle, data, size);
     }
 
 private:
