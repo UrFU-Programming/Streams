@@ -78,11 +78,6 @@ Array<int> splitter(long long number)
 class TextWriter
 {
 public:
-    TextWriter(int handle) :
-        m_handle(handle)
-    {
-    }
-
     TextWriter &operator<<(char c)
     {
         writeData(&c, 1);
@@ -105,16 +100,29 @@ public:
         return *this;
     }
 protected:
-    int writeData(const void *data, int size)
+    virtual void writeData(const void *data, int size) = 0;
+
+};
+
+class FileWriter : public TextWriter
+{
+public:
+    FileWriter(int handle) :
+        m_handle(handle)
     {
-        return write(m_handle, data, size);
+    }
+
+protected:
+    void writeData(const void *data, int size)
+    {
+        write(m_handle, data, size);
     }
 
 private:
     int m_handle;
 };
 
-TextWriter cout(STDOUT_FILENO);
+FileWriter cout(STDOUT_FILENO);
 const char endl = '\n';
 
 int main(int argc, char *argv[])
