@@ -325,6 +325,12 @@ const char endl = '\n';
 
 int main(int argc, char *argv[])
 {
+    Array<String> arguments = getArguments(argc, argv);
+
+    for (int i = 0; i < arguments.count(); ++i) {
+        cout << "Arg" << i << ": " << arguments.at(i) << endl;
+    }
+
     cout << "Hello, world!" << endl;
     cout << 50 << endl;
 
