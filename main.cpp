@@ -93,6 +93,12 @@ public:
 
     const char *constData() const { return m_buffer; }
 
+    void clear()
+    {
+        m_size = 0;
+        m_buffer[m_size] = 0;
+    }
+
     char at(int index) const
     {
         return m_buffer[index];
