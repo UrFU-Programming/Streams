@@ -66,7 +66,7 @@ Array<int> splitter(long long number)
         number = reduced;
     }
 
-    for (int i = 0; i < array.size(); ++i) {
+    for (int i = 0; i < array.size() / 2; ++i) {
         int v = array[i];
         array[i] = array[array.size() - i - 1];
         array[array.size() - i - 1] = v;
