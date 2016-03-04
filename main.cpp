@@ -118,6 +118,11 @@ public:
         return true;
     }
 
+    bool operator!=(const String &anotherString)
+    {
+        return !(*this == anotherString);
+    }
+
     String &operator+=(const char c)
     {
         m_buffer[m_size] = c;
