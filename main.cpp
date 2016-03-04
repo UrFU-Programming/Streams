@@ -161,24 +161,35 @@ private:
     char m_buffer[256];
 };
 
+class IODevice
+{
+public:
+    virtual void writeData(const void *data, int size) = 0;
+};
+
 class TextWriter
 {
 public:
+    TextWriter(IODevice *device) :
+        m_device(device)
+    {
+    }
+
     TextWriter &operator<<(char c)
     {
-        writeData(&c, 1);
+        m_device->writeData(&c, 1);
         return *this;
     }
 
     TextWriter &operator<<(const char *str)
     {
-        writeData(str, own_strlen(str));
+        m_device->writeData(str, own_strlen(str));
         return *this;
     }
 
     TextWriter &operator<<(const String &str)
     {
-        writeData(str.constData(), str.size());
+        m_device->writeData(str.constData(), str.size());
         return *this;
     }
 
@@ -192,14 +203,14 @@ public:
         return *this;
     }
 protected:
-    virtual void writeData(const void *data, int size) = 0;
+    IODevice *m_device;
 
 };
 
-class FileWriter : public TextWriter
+class File : public IODevice
 {
 public:
-    FileWriter(int handle) :
+    File(int handle) :
         m_handle(handle)
     {
     }
@@ -214,10 +225,10 @@ private:
     int m_handle;
 };
 
-class BufferWriter : public TextWriter
+class Buffer : public IODevice
 {
 public:
-    BufferWriter() :
+    Buffer() :
         m_currentPos(0)
     {
         m_buffer[0] = 0;
@@ -246,7 +257,9 @@ private:
     int m_currentPos;
 };
 
-FileWriter cout(STDOUT_FILENO);
+File coutFile(STDOUT_FILENO);
+TextWriter cout(&coutFile);
+
 const char endl = '\n';
 
 int main(int argc, char *argv[])
@@ -283,14 +296,15 @@ int main(int argc, char *argv[])
         cout << "OK." << endl;
     }
 
-    BufferWriter bufferWriter;
+    Buffer buffer;
+    TextWriter bufferWriter(&buffer);
     bufferWriter << "Text";
     bufferWriter << 747;
 
     String expected = "Text747";
 
-    cout << "BufferWriter and String !=: ";
-    if (bufferWriter.toString() != expected) {
+    cout << "Buffer, TextWriter and String !=: ";
+    if (buffer.toString() != expected) {
         cout << "Fail!" << endl;
     } else {
         cout << "OK." << endl;
