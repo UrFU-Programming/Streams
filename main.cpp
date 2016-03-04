@@ -361,5 +361,24 @@ int main(int argc, char *argv[])
         cout << "OK." << endl;
     }
 
+    buffer.reset();
+
+    cout.setDevice(&buffer);
+
+    cout << "Buffer test" << endl;
+    cout << 12345 << endl;
+
+    cout.setDevice(&coutFile);
+
+    String expectedResult = "Buffer test\n12345\n";
+
+    cout << "TextWriter::setDevice() and String ==: ";
+    if (buffer.toString() == expectedResult) {
+        cout << "OK" << endl;
+    } else {
+        cout << "Fail" << endl;
+        cout << buffer.toString();
+    }
+
     return 0;
 }
