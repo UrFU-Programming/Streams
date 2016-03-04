@@ -308,6 +308,16 @@ private:
     int m_currentPos;
 };
 
+Array<String> getArguments(int argc, char *argv[])
+{
+    Array<String> result;
+    for (int i = 0; i < argc; ++i) {
+        result.append(String(argv[i]));
+    }
+
+    return result;
+}
+
 File coutFile(STDOUT_FILENO);
 TextWriter cout(&coutFile);
 
