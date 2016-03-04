@@ -175,6 +175,16 @@ public:
     {
     }
 
+    IODevice *device() const
+    {
+        return m_device;
+    }
+
+    void setDevice(IODevice *device)
+    {
+        m_device = device;
+    }
+
     BinWriter &operator<<(char c)
     {
         m_device->writeData(&c, 1);
@@ -204,6 +214,16 @@ public:
     TextWriter(IODevice *device) :
         m_device(device)
     {
+    }
+
+    IODevice *device() const
+    {
+        return m_device;
+    }
+
+    void setDevice(IODevice *device)
+    {
+        m_device = device;
     }
 
     TextWriter &operator<<(char c)
