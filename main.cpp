@@ -222,5 +222,34 @@ int main(int argc, char *argv[])
     cout << "Hello, world!" << endl;
     cout << 50 << endl;
 
+    String s1 = "Hello";
+    String s2 = "world";
+
+    s1 += " ";
+    s1 += s2;
+
+    s1 += '!';
+
+    s1 += endl;
+
+    s1 += 2123;
+
+    cout << s1 << endl;
+
+    cout << "String isEmpty(): ";
+    if (s1.isEmpty()) {
+        cout << "Fail!" << endl;
+    } else {
+        cout << "OK." << endl;
+    }
+    s1.clear();
+
+    cout << "String isEmpty() after clear(): ";
+    if (!s1.isEmpty()) {
+        cout << "Fail!" << endl;
+    } else {
+        cout << "OK." << endl;
+    }
+
     return 0;
 }
