@@ -176,6 +176,12 @@ public:
         return *this;
     }
 
+    TextWriter &operator<<(const String &str)
+    {
+        writeData(str.constData(), str.size());
+        return *this;
+    }
+
     TextWriter &operator<<(const int n)
     {
         Array<int> digits = splitter(n);
