@@ -103,6 +103,21 @@ public:
         return m_buffer[index];
     }
 
+    bool operator==(const String &anotherString)
+    {
+        if (m_size != anotherString.size()) {
+            return false;
+        }
+
+        for (int i = 0; i < m_size; ++i) {
+            if (m_buffer[i] != anotherString.m_buffer[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     String &operator+=(const char c)
     {
         m_buffer[m_size] = c;
