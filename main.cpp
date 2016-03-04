@@ -283,5 +283,18 @@ int main(int argc, char *argv[])
         cout << "OK." << endl;
     }
 
+    BufferWriter bufferWriter;
+    bufferWriter << "Text";
+    bufferWriter << 747;
+
+    String expected = "Text747";
+
+    cout << "BufferWriter and String !=: ";
+    if (bufferWriter.toString() != expected) {
+        cout << "Fail!" << endl;
+    } else {
+        cout << "OK." << endl;
+    }
+
     return 0;
 }
