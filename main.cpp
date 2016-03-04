@@ -214,6 +214,38 @@ private:
     int m_handle;
 };
 
+class BufferWriter : public TextWriter
+{
+public:
+    BufferWriter() :
+        m_currentPos(0)
+    {
+        m_buffer[0] = 0;
+    }
+
+    void reset()
+    {
+        m_currentPos = 0;
+    }
+
+    String toString() const
+    {
+        return String(m_buffer);
+    }
+
+protected:
+    void writeData(const void *data, int size)
+    {
+        own_memcpy(&m_buffer[m_currentPos], data, size);
+        m_currentPos += size;
+        m_buffer[m_currentPos] = 0;
+    }
+
+private:
+    char m_buffer[256];
+    int m_currentPos;
+};
+
 FileWriter cout(STDOUT_FILENO);
 const char endl = '\n';
 
