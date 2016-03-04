@@ -167,6 +167,37 @@ public:
     virtual void writeData(const void *data, int size) = 0;
 };
 
+class BinWriter
+{
+public:
+    BinWriter(IODevice *device) :
+        m_device(device)
+    {
+    }
+
+    BinWriter &operator<<(char c)
+    {
+        m_device->writeData(&c, 1);
+        return *this;
+    }
+
+    BinWriter &operator<<(const String &str)
+    {
+        *this << str.size();
+        m_device->writeData(str.constData(), str.size());
+        return *this;
+    }
+
+    BinWriter &operator<<(const int n)
+    {
+        m_device->writeData(&n, 4); // size of int is 4 bytes
+        return *this;
+    }
+protected:
+    IODevice *m_device;
+
+};
+
 class TextWriter
 {
 public:
